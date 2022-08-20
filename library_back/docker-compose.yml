@@ -3,7 +3,7 @@ version: '3.5'
 services:
   library-db:
     container_name: library-db
-    image: postgres:12.0
+    image: "postgres:${POSTGRES_VERSION}"
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     env_file:
