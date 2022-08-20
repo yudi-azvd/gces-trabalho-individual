@@ -91,3 +91,29 @@ Dúvidas:
 para `library-db`. Por que? O container não conhece a rede local?
 - no final
 
+## Etapa 3 - Container do frontend
+
+Contexto: `library_front`
+
+Na etapa 3, vai estar implícito que os containeres do back estão rodando.
+
+Para o app React comunicar com a API, foi feita a seguinte modificação:
+
+```diff
+export const BASE_API = axios.create({
+-   baseURL: "http://localhost:8000"
++   baseURL: "http://localhost:3333"
+});
+```
+
+Depois de executar `docker compose up --build` era possível ver o 
+seguinte:
+
+![](docs/etapa-3-livros.png)
+
+Você pode notar que são os mesmos livros que apareceram na etapa 2, mas
+agora são apresentados pelo frontend.
+
+Melhorias:
+
+- cachear `node_modules`
