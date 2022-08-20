@@ -55,7 +55,18 @@ Assim, foi possível acessar a interface do Django:
 
 ![API do django](docs/etapa-2-api-navegador.png)
 
+Em seguida, removi as variáveis ambiente hardcoded no `start.sh` 
 
+    echo ">>> starting server"
+    python manage.py runserver "0.0.0.0:${API_PORT}"
+
+E no `docker-compose.yml`:
+
+    ports:
+      - "${API_PORT}:${API_PORT}"
+
+Assim, as variáveis ambiente (portas até agora) ficam concentradas em apenas
+um local, `.env`, o que facilita a manutenção.
 
 Melhorias: 
 
@@ -64,7 +75,7 @@ Melhorias:
 Acredito que há oportunidade de otimização (uma ferramenta útil: 
 [dive](https://github.com/wagoodman/dive))
 <!-- TODO: fazer essas melhorias aqui -->
-- tempo de construção da imagem >2min
+- tempo de construção da imagem >3min
 <!-- TODO: fazer essas melhorias aqui -->
 - dá pra cachear as dependências do Python?
 

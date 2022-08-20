@@ -7,4 +7,4 @@ echo ">>> migrating"
 python manage.py migrate
 
 echo ">>> starting server"
-python manage.py runserver 0.0.0.0:3333
+python manage.py runserver "0.0.0.0:${API_PORT}"
