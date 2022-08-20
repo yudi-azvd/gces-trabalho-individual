@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  library-web:
+    container_name: library-web
+    ports:
+      - 3000:3000
+    env_file: .env
+    build: .
+
+networks:
+  library-network:
+    external: true
+
