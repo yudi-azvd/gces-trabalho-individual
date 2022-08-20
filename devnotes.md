@@ -52,8 +52,11 @@ python manage.py runserver 0.0.0.0:3333
 
 Assim, foi possível acessar a interface do Django:
 
-
 ![API do django](docs/etapa-2-api-navegador.png)
+
+E os livros podem ser criados no banco de dados e visualizados no navegador:
+
+![Exemplo de livros criados no banco de dados](docs/etapa-2-api-livros.png)
 
 Em seguida, removi as variáveis ambiente hardcoded no `start.sh` 
 
@@ -62,6 +65,8 @@ Em seguida, removi as variáveis ambiente hardcoded no `start.sh`
 
 E no `docker-compose.yml`:
 
+    image: "postgres:${POSTGRES_VERSION}"
+    ...
     ports:
       - "${API_PORT}:${API_PORT}"
 
