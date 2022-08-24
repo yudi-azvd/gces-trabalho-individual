@@ -117,3 +117,32 @@ agora são apresentados pelo frontend.
 Melhorias:
 
 - cachear `node_modules`
+
+--- 
+
+**Pode fazer em dois repos separados? Back e front.**?
+
+Nginx só pro front ou back? ou pros dois?
+
+---
+
+## Etapa 4 - Container Nginx
+
+Depois de tirar dúvidas com o professor, decidi ter apenas um `docker-compose.yml`
+na raíz do projeto que levanta todos os containeres.
+
+O container do Nginx redireciona o tráfego na porta 80 (servidor nginx) para a 
+porta 3000 (aplicação web React). Na imagem a seguir, é possível observar que 
+a requisição é feita pela porta padrão 80 e o resultado é a primeira página
+da biblioteca:
+
+![](docs/etapa-4-nginx.png)
+
+
+Dúvidas pairando na minha cabeça:
+
+- em produção, o que deve rodar são as builds do frontend e do backend. Com os
+Dockerfiles atuais, o que estão rodando são as versões de desenvolvimento. Como
+usar uma imagem de build de produção em ambiente de produção? Tem que fazer um 
+Dockerfile novo de produção? (Esse me parece muito repetitivo)
+<!-- https://devcenter.heroku.com/articles/local-development-with-docker-compose -->
