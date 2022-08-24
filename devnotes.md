@@ -73,7 +73,7 @@ E no `docker-compose.yml`:
 Assim, as variáveis ambiente (portas até agora) ficam concentradas em apenas
 um local, `.env`, o que facilita a manutenção.
 
-Melhorias: 
+**Melhorias**: 
 
 <!-- TODO: fazer essas melhorias aqui -->
 - a imagem do Python geralmente é maior do que se necessita para uma aplicação.
@@ -114,17 +114,9 @@ seguinte:
 Você pode notar que são os mesmos livros que apareceram na etapa 2, mas
 agora são apresentados pelo frontend.
 
-Melhorias:
+**Melhorias**:
 
 - cachear `node_modules`
-
---- 
-
-**Pode fazer em dois repos separados? Back e front.**?
-
-Nginx só pro front ou back? ou pros dois?
-
----
 
 ## Etapa 4 - Container Nginx
 
@@ -138,6 +130,9 @@ da biblioteca:
 
 ![](docs/etapa-4-nginx.png)
 
+Além disso, as variáveis de ambiente para movidas para o arquivo `.env` na raíz
+desse repositório. É desse arquivo que são tiradas as variáveis de ambiente
+no novo `docker-compose.yml`.
 
 Dúvidas pairando na minha cabeça:
 
