@@ -14,6 +14,8 @@ services:
       - library-pg-data:/var/lib/postgresql/data
   
   library-api:
+    container_name: library-api
+    build: library_back
     networks:
       - library-network
     ports:
@@ -22,12 +24,28 @@ services:
       - .env
     depends_on:
       - library-db
-    container_name: library-api
-    build: .
 
+  library-web:
+    container_name: library-web
+    ports:
+      - 3000:3000
+    env_file: .env
+    build: library_front
+  
+  # https://www.youtube.com/watch?v=7VAI73roXaY
+  nginx:
+    container_name: nginx
+    restart: always
+    image: nginx:1.23.1-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+  
 volumes:
   library-pg-data: {}
 
+# Precisa dessa rede?
 networks:
   library-network:
     name: library-networks
