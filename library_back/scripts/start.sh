@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e 
 
 echo ">>> making migrations"
 python manage.py makemigrations
