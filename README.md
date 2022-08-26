@@ -1,5 +1,11 @@
+## Notas de desenvolvimento
+
+O processo de desenvolvimento desse trabalho é registrado em 
+[docs/devnotes.md](docs/devnotes.md).
+
 # Trabalho-Individual-2022-1
 Trabalho individual de GCES de 2022/1
+
 
 Os conhecimentos de *Gestão de Configuração de Software* são fundamentais no ciclo de vida de um produto de software. As técnicas para a gestão vão desde o controle de versão, automação de build e de configuração de ambiente, testes automatizados, isolamento do ambiente até o deploy do sistema. Todo este ciclo nos dias de hoje são integrados em um pipeline de DevOps com as etapas de Integração Contínua (CI) e Deploy Contínuo (CD) implementadas e automatizada.
 
