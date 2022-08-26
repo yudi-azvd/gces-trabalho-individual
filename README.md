@@ -1,7 +1,7 @@
 ## Notas de desenvolvimento
 
 O processo de desenvolvimento desse trabalho é registrado em 
-[docs/devnotes.md](docs/devnotes.md).
+[devnotes.md](devnotes.md).
 
 # Trabalho-Individual-2022-1
 Trabalho individual de GCES de 2022/1
