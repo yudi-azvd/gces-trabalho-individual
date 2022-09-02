@@ -36,7 +36,7 @@ jobs:
           # docker-compose up -d library-db
           # docker-compose up -d library-api
           # docker-compose up -d library-web
-          docker-compose up -d --build --abort-on-container-exit
+          docker-compose up -d --build
           
           docker exec library-api /bin/bash -c "./scripts/test-integ.sh"
           docker logs library-web
