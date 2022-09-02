@@ -33,7 +33,7 @@ jobs:
       
       - name: Levantar todos containers e executar Testes de API e Web
         run: |
-          docker-compose up -f "docker-compose.yml" -d --build
+          docker-compose up -d --build
 
           docker ps
           
