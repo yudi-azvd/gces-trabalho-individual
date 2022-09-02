@@ -8,36 +8,76 @@ on:
   push:
     branches:
       - 'main'
-      - 'etapa-**'
 
 jobs:
-  build-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v2
-      # - name: Setup Docker Buildx
-      #   uses: docker/setup-buildx-action@v2
-      # - name: Login to Docker Hub
-      #   uses: docker/login-action@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      
+      # - name: Build e Push - API
+      #   uses: docker/build-push-action@v3
       #   with:
-      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
-      #     password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      #     context: "{{defaultContext}}:library_back"
+      #     file: ./Dockerfile
+      #     push: true
+      #     tags: yazvd/library-api:latest
+      #     cache-from: type=registry,ref=yazvd/library-api:buildcache
+      #     cache-to:   type=registry,ref=yazvd/library-api:buildcache,mode=max
 
+      - name: Build e export - API
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:library_back"
+          file: ./Dockerfile
+          tags: yazvd/library-api:latest
+          cache-from: type=registry,ref=yazvd/library-api:buildcache
+          cache-to:   type=registry,ref=yazvd/library-api:buildcache,mode=max
+          outputs: type=docker,dest=/tmp/library-api.tar
+
+      - name: Upload da imagem library-api
+        uses: actions/upload-artifact@v3
+        with:
+          name: library-api
+          path: /tmp/library-api.tar
+          retention-days: 1
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: library-api
+          path: /tmp
+      
       - name: Copiar arquivo para .env
         run: |
           cp .env.example .env
           cp .env.example library_back/.env
       
-      - name: Levantar todos containers e executar Testes de API e Web
+      - name: Levantar Backend (server + banco de dados)
+        # Tentativa de carregar imagem do servidor antes de subir os containeres
         run: |
-          docker-compose up -d --build
-
-          docker exec library-api /bin/bash -c "python manage.py migrate"
-          
+          docker load --input /tmp/library-api.tar
+          docker-compose up -d library-db
+          docker-compose up -d library-api
+      
+      - name: Executar testes de integração
+        run: |
           docker exec library-api /bin/bash -c "./scripts/test-integ.sh"
-          docker exec library-web /bin/bash -c "npm run test"
-
-# Tentar encontrar outr GH Action pra docker compose
