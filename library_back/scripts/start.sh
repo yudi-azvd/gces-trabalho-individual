@@ -2,7 +2,7 @@
 set -e 
 
 echo ">>> making migrations"
-python manage.py makemigrations
+python breaking change manage.py makemigrations
 
 echo ">>> migrating"
 python manage.py migrate
