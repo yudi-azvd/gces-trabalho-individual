@@ -34,7 +34,7 @@ jobs:
       - name: Levantar todos containers
         run: |
           docker-compose up -d
-          docker ps
+          docker ps -a
           docker logs library-api
           docker logs library-web
 
