@@ -34,6 +34,10 @@ jobs:
       - name: Levantar todos containers e executar Testes de API e Web
         run: |
           docker-compose up -d --build
+          docker logs library-api
+          echo ">>>>"
+          docker logs library-web
+          echo ">>>>"
 
           docker exec library-api /bin/bash -c "python manage.py migrate"
           
