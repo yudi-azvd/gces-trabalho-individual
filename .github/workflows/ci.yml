@@ -33,7 +33,7 @@ jobs:
       
       - name: Levantar todos containers
         run: |
-          docker-compose up -d
+          docker-compose up -d --build
 
       - name: Executar testes API
         run: |
