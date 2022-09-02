@@ -5,7 +5,7 @@ services:
     container_name: library-db
     image: "postgres:${POSTGRES_VERSION}"
     ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     env_file:
       - .env
     networks:
@@ -19,7 +19,7 @@ services:
     networks:
       - library-network
     ports:
-      - 5432:5432
+      - "${API_PORT}:${API_PORT}"
     env_file:
       - .env
     depends_on:
