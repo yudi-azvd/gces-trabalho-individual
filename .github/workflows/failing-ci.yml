@@ -2,7 +2,7 @@
 # https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/  
 
 
-name: CI
+name: Failing CI
 
 on:
   push:
