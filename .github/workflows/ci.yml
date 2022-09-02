@@ -38,5 +38,5 @@ jobs:
           docker-compose up -d library-web
           
           docker exec library-api /bin/bash -c "./scripts/test-integ.sh"
+          docker logs library-web
           docker exec library-web sh -c "npm run test"
-          
