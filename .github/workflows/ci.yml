@@ -77,6 +77,7 @@ jobs:
           docker load --input /tmp/library-api.tar
           docker-compose up -d library-db
           docker-compose up -d library-api
+          docker ps
       
       - name: Executar testes de integração
         run: |
