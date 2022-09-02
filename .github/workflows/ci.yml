@@ -24,6 +24,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+          cp .env.example library_back/.env
       
       - name: Levantar todos containers
         run: |
