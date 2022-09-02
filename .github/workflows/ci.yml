@@ -34,11 +34,11 @@ jobs:
       - name: Levantar todos containers
         run: |
           docker-compose up -d
-          docker ps -a
-          echo ">>><<<"
-          docker logs library-api
-          echo ">>><<<"
-          docker logs library-web
+      
+      - name: Executar migrações API
+        run: |
+          docker exec library-api /bin/bash -c "python manage.py makemigrations"
+          docker exec library-api /bin/bash -c "python manage.py migrate"
 
       - name: Executar testes API
         run: |
