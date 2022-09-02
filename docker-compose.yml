@@ -31,6 +31,8 @@ services:
       - 3000:3000
     env_file: .env
     build: library_front
+    volumes:
+      - ./library_front:/library_front
   
   # https://www.youtube.com/watch?v=7VAI73roXaY
   nginx:
