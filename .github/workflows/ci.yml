@@ -33,9 +33,10 @@ jobs:
       
       - name: Levantar todos containers
         run: |
-          docker-compose up -d library-db
-          docker-compose up -d library-api
-          docker-compose up -d library-web
+          docker-compose up -d
+          docker ps
+          docker logs library-api
+          docker logs library-web
 
       - name: Executar testes API
         run: |
