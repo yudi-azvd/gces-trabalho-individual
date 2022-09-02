@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16.17.0-alpine
 
 WORKDIR /library_front
 
