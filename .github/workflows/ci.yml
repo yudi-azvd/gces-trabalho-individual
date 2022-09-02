@@ -35,7 +35,7 @@ jobs:
         run: |
           docker-compose up -d --build
 
-          docker ps
+          docker exec library-api /bin/bash -c "python manage.py migrate"
           
           docker exec library-api /bin/bash -c "./scripts/test-integ.sh"
           docker exec library-web /bin/bash -c "npm run test"
