@@ -77,9 +77,11 @@ jobs:
         # Tentativa de carregar imagem do servidor antes de subir os containeres
         run: |
           docker load --input /tmp/library-api.tar
-          docker-compose up -d library-db
-          docker-compose up -d library-api
-          docker ps
+          docker-compose up -d --build
+          docker logs library-api
+          echo ">>>>"
+          docker logs library-web
+          echo ">>>>"
       
       - name: Executar testes de integração
         run: |
