@@ -50,5 +50,5 @@ volumes:
 # Precisa dessa rede?
 networks:
   library-network:
-    name: library-networks
+    name: library-network
     driver: bridge
