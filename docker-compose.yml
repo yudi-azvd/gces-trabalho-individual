@@ -24,6 +24,8 @@ services:
       - .env
     depends_on:
       - library-db
+    volumes:
+      - ./library_back:/library_back
 
   library-web:
     container_name: library-web
@@ -33,6 +35,7 @@ services:
     build: library_front
     volumes:
       - ./library_front:/library_front
+      - npm_cache:/library_front/node_modules
   
   # https://www.youtube.com/watch?v=7VAI73roXaY
   nginx:
@@ -46,6 +49,7 @@ services:
   
 volumes:
   library-pg-data: {}
+  npm_cache:
 
 # Precisa dessa rede?
 networks:
