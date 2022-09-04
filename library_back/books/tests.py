@@ -23,7 +23,8 @@ class BookTests(unittest.TestCase):
         self.book.delete()
 
     def test_valid_fields(self):
-        valid_fields = ('id', 'title', 'author', 'release_year', 'is_rented', 'renter')
+        valid_fields = ('id', 'title', 'author',
+                        'release_year', 'is_rented', 'renter')
         invalid_fields = ('random_field', 'foo', 'bar')
         data = self.serializer.data
         self.assertEqual(set(data.keys()), set(valid_fields))
