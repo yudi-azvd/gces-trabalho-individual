@@ -36,6 +36,8 @@ jobs:
       - name: Testes API
         run: |
           docker-compose up -d library-db
+          docker-compose up -d library-api
+          docker-compose logs
           docker-compose run library-api sh -c "./scripts/test-integ.sh"
 
   test-web:
