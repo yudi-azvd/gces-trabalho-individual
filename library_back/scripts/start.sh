@@ -1,11 +1,13 @@
 #!/bin/bash
-set -e 
 
-echo ">>> making migrations"
+printf ">>> making migrations"
 python manage.py makemigrations
+printf ">>>> done\n"
 
-echo ">>> migrating"
+printf ">>> migrating"
 python manage.py migrate
+printf ">>>> done"
 
-echo ">>> starting server"
+printf ">>> starting server"
 python manage.py runserver "0.0.0.0:${API_PORT}"
+printf ">>>> done"

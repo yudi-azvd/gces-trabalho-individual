@@ -1,0 +1,42 @@
+# https://docs.docker.com/ci-cd/github-actions/
+# https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/  
+
+
+name: CI super simples
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'etapa-**'
+
+jobs:
+  build-test-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+          cp .env.example library_back/.env
+      
+      - name: Levantar todos containers
+        run: |
+          docker-compose up -d --build
+          docker-compose logs
+      
+      - name: Testes API
+        run: |
+          docker exec library-api sh -c "./scripts/test-integ.sh"
+
+      - name: Testes Web
+        run: |
+          docker exec library-web sh -c "npm run test"
+
+      - name: Lint API
+        run: docker exec library-api bash -c "./scripts/lint.sh"
+      
+      - name: Lint Web
+        run: docker exec library-web sh -c "npm run lint"

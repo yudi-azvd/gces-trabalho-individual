@@ -1,0 +1,1 @@
+python -m autopep8 . -r -d --exclude="**migrations/**" --exit-code

@@ -1,0 +1,1 @@
+python -m autopep8 . -r -i --exclude="**migrations/**"

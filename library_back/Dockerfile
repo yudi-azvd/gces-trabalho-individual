@@ -8,4 +8,4 @@ RUN apt-get update && apt-get install -y libpq-dev gcc
 
 RUN pip install -r requirements.txt
 
-CMD [ "bash", "scripts/start.sh" ]
+CMD [ "sh", "scripts/start.sh" ]

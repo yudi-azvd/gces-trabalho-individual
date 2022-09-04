@@ -2,12 +2,14 @@
 # https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/  
 
 
-name: CI
+name: Integração Contínua
 
 on:
   push:
     branches:
       - 'main'
+      - 'etapa-**'
+
 
 jobs:
   build:
@@ -71,13 +73,13 @@ jobs:
           cp .env.example .env
           cp .env.example library_back/.env
       
-      - name: Levantar Backend (server + banco de dados)
+      - name: Levantar containers
         # Tentativa de carregar imagem do servidor antes de subir os containeres
         run: |
-          docker load --input /tmp/library-api.tar
-          docker-compose up -d library-db
-          docker-compose up -d library-api
+          docker-compose up -d --build
+          docker-compose logs
+          docker-compose ps
       
-      - name: Executar testes de integração
+      - name: Testes API
         run: |
-          docker exec library-api /bin/bash -c "./scripts/test-integ.sh"
+          docker exec library-api sh -c "./scripts/test-integ.sh"
