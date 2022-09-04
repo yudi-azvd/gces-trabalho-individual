@@ -1,0 +1,70 @@
+# https://docs.docker.com/ci-cd/github-actions/
+# https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/  
+
+
+name: CI Teste
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'etapa-**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+          cp .env.example library_back/.env
+      
+      - name: Levantar todos containers
+        run: |
+          docker-compose up -d --build
+          docker-compose logs
+  
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+          cp .env.example library_back/.env
+      - name: Testes API
+        run: |
+          docker-compose up -d library-db
+          docker-compose run library-api sh -c "./scripts/test-integ.sh"
+
+  test-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+      - name: Testes Web
+        run: docker-compose run library-web sh -c "npm run test"
+
+  lint-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+          cp .env.example library_back/.env
+      - name: Lint API
+        run: docker-compose run library-api sh -c "./scripts/lint.sh"
+
+  lint-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Copiar arquivo para .env
+        run: |
+          cp .env.example .env
+      - name: Lint Web
+        run: docker-compose run library-web sh -c "npm run lint"
