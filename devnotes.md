@@ -11,6 +11,8 @@ dificuldades encontradas no meio do caminho.
 atômicas em cada commit, com uma mensagem curta e clara sobre a mudança. Leia
 mais sobre isso [aqui](https://conventionalcommits.org/).
 
+Commit do tipo `guess` foram inventados por mim pra chutar configurações no CI. 
+No frigir dos ovos, esses commits podem ser ignorados de maneira geral.
 
 ## Etapa 1 - Containerização do banco de dados
 
@@ -44,7 +46,8 @@ preenchido com as tabelas corretamente:
 
 ![Banco de dados com tabelas](docs/etapa-2-db.png)
 
-A API é iniciada, mas não consiguia acessar pelo navegador. Então mudei o comando de iniciar o servidor no script `start.sh` para o seguinte
+A API é iniciada, mas não consiguia acessar pelo navegador. Então mudei o comando
+de iniciar o servidor no script `start.sh` para o seguinte
 
 ```sh
 python manage.py runserver 0.0.0.0:3333
@@ -73,7 +76,7 @@ E no `docker-compose.yml`:
 Assim, as variáveis ambiente (portas até agora) ficam concentradas em apenas
 um local, `.env`, o que facilita a manutenção.
 
-**Melhorias**: 
+### Melhorias: 
 
 <!-- TODO: fazer essas melhorias aqui -->
 - a imagem do Python geralmente é maior do que se necessita para uma aplicação.
@@ -114,7 +117,7 @@ seguinte:
 Você pode notar que são os mesmos livros que apareceram na etapa 2, mas
 agora são apresentados pelo frontend.
 
-**Melhorias**:
+### Melhorias:
 
 - cachear `node_modules`
 
@@ -141,3 +144,41 @@ Dockerfiles atuais, o que estão rodando são as versões de desenvolvimento. Co
 usar uma imagem de build de produção em ambiente de produção? Tem que fazer um 
 Dockerfile novo de produção? (Esse me parece muito repetitivo)
 <!-- https://devcenter.heroku.com/articles/local-development-with-docker-compose -->
+
+## Etapa 5 - CI
+
+Um dos erros era sobre a conexão. A API não conseguia se conectar ao banco de 
+dados:
+
+![](docs/etapa-5-erro-conex%C3%A3o.png)
+
+Outro erro era no serviço da API:
+
+![](docs/etapa-5-erro-migra%C3%A7%C3%A3o.png)
+
+Eu queria evitar dizer isso, mas na minha máquina funcionava perfeitamente. 
+
+Nem sei o que fiz pra funcionar no CI. 
+Acrescentei `docker-compose logs` e passou a funcionar, mas duvido que isso
+seja uma correção real. Deve ter um erro em algum outro lugar. De vez em quando 
+o segundo erro erro volta no CI.
+
+Pra resolver o `react-scripts not found`: adicionei npm cache como volume.
+
+### Dúvidas
+- Lint e testes unitários deveriam rodar fora do container? São checks quase 
+estáticos (tirando testes unitários). 
+Não deveria ser necessário um container rodando. Mas rodando isso fora do 
+container iria contra a ideia de reproduzir o ambiente da aplicação. Como proceder?
+
+### Possíveis Melhorias
+
+- Cachear as imagens API e Web pra usar em jobs diferentes
+no CI. Assim é possível paralelizar jobs como teste e lint
+(e build também?)
+- Imagem de produção (mais leve e sem dependências de desenvolvimento) para API 
+e Web para o deploy
+
+## Etapa 6 - CD
+
+Não foi feito
