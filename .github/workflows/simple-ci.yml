@@ -25,6 +25,7 @@ jobs:
       - name: Levantar todos containers
         run: |
           docker-compose up -d --build
+          docker-compose logs
       
       - name: Testes API
         run: |
